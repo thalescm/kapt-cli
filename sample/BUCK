@@ -1,0 +1,75 @@
+lib_deps = []
+
+java_annotation_processor(
+    name = "kapt",
+    deps = [
+        "//ap:src_main",
+    ],
+    processor_class = "br.com.thales.buckt.VBProcessor"
+)
+
+kotlin_library(
+    name = 'src_main',
+    srcs = glob([
+        'build/generated/**/*.java',
+        'build/generated/**/*.kt',
+        'src/main/java/**/*.java',
+        'src/main/java/**/*.kt',
+    ]),
+    source = '8',
+    target = '8',
+    tests = [
+        ':test_main',
+    ],
+    provided_deps = [
+        '//.okbuck/cache:com.squareup.kotlinpoet-0.5.0.jar',
+        '//.okbuck/cache:org.jetbrains.kotlin.kotlin-reflect-1.1.4-3.jar',
+        '//ap:src_main',
+    ],
+    plugins = [
+        ":kapt",
+    ],
+    deps = [
+        '//.okbuck/cache:org.jetbrains.annotations-13.0.jar',
+        '//.okbuck/cache:org.jetbrains.kotlin.kotlin-stdlib-1.2.0.jar',
+        '//.okbuck/cache:org.jetbrains.kotlin.kotlin-stdlib-jre7-1.2.0.jar',
+        '//.okbuck/cache:org.jetbrains.kotlin.kotlin-stdlib-jre8-1.2.0.jar',
+    ],
+    visibility = [
+        'PUBLIC',
+    ],
+)
+
+lib_deps = []
+
+kotlin_test(
+    name = 'test_main',
+    srcs = glob([
+        'src/test/java/**/*.java',
+        'src/test/java/**/*.kt',
+    ]),
+    source = '8',
+    target = '8',
+    vm_args = [
+        '-Dfile.encoding=UTF-8',
+        '-Duser.country=US',
+        '-Duser.language=en',
+        '-Duser.variant',
+        '-ea',
+    ],
+    deps = [
+        '//.okbuck/cache:org.jetbrains.annotations-13.0.jar',
+        '//.okbuck/cache:org.jetbrains.kotlin.kotlin-stdlib-1.2.0.jar',
+        '//.okbuck/cache:org.jetbrains.kotlin.kotlin-stdlib-jre7-1.2.0.jar',
+        '//.okbuck/cache:org.jetbrains.kotlin.kotlin-stdlib-jre8-1.2.0.jar',
+        ':src_main',
+    ],
+    labels = [
+        'unit',
+        'java',
+    ],
+    visibility = [
+        'PUBLIC',
+    ],
+)
+

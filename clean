@@ -2,6 +2,7 @@
 
 WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+rm -rf $WORKING_DIR/ap/build/output/*
 rm -rf $WORKING_DIR/build/classes/*
 rm -rf $WORKING_DIR/build/incremental/*
 rm -rf $WORKING_DIR/build/output/*

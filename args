@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
 
-KOTLIN_HOME=""
-CLASSPATH="${KOTLIN_HOME}/lib/kotlin-stdlib.jar:"
-OUTPUT="build/output"
+WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# KOTLIN_HOME=""
+CLASSPATH="${JAVA_HOME}/lib/tools.jar:${KOTLIN_HOME}/lib/kotlin-stdlib.jar:${KOTLIN_HOME}/lib/kotlin-stdlib-jre7.jar:${KOTLIN_HOME}/lib/kotlin-stdlib-jre8.jar:${KOTLIN_HOME}/lib/kotlin-reflect.jar:$WORKING_DIR/libs/org.jetbrains.annotations-13.0.jar:$WORKING_DIR/libs/com.squareup.kotlinpoet-0.5.0.jar"
 BUILD_FILE="module-template.xml"
 MODULE_NAME="app_debug"
-CLASSES="build/classes"
+OUTPUT="build/output"
+ANNOTATION_PROCESSOR="${KOTLIN_HOME}/lib/kotlin-annotation-processing.jar"
+
+# Kapt Plugin specific
 SOURCES="build/sources"
+CLASSES="build/classes"
 STUBS="build/stubs"
 INCREMENTAL_DATA="build/incremental"
-ANNOTATION_PROCESSOR="${KOTLIN_HOME}/lib/kotlin-annotation-processing.jar"
-AP_OPTIONS=""
+AP_OPTIONS="" # should kapt.kotlin.generated be passed here, many processor rely on this option?
 JAVAC_ARGUMENTS=""
 AP_CLASSPATH_ARG="plugin:org.jetbrains.kotlin.kapt3:apclasspath="
-AP_CLASSPATH="${AP_CLASSPATH_ARG}/"
+AP_CLASSPATH="${P_CLASSPATH_ARG}"
+LIGHT_ANALYSIS="true"
+CORRECT_ERROR_TYPES="false"
+VERBOSE="true"
