@@ -39,8 +39,8 @@ fi
 # export KOTLIN_HOME=$KOTLIN_HOME
 set -xxx
 
-# Step 1: Generate Stubs
-info "RUNNING STEP 1..."
+# Step 1: Creating ap jar
+info "Creating annotation processing jar"
 $KOTLIN_HOME/bin/kotlinc \
 ./ap/src/main/kotlin/br/com/thales/buckt/ViewBinder.kt \
 ./ap/src/main/kotlin/br/com/thales/buckt/VBProcessor.kt \
@@ -57,9 +57,9 @@ cp -r ap/src/main/resources/META-INF ap/build/output/META-INF
 
 
 # Step 1: Generate Stubs
-info "RUNNING STEP 2..."
+info "Generating sample stubs"
 $KOTLIN_HOME/bin/kotlinc \
-./sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMain.kt \
+./sample/src/main/kotlin/br/com/thales/buckt/NameViewBinder.kt \
 -classpath $SAMPLE_CLASSPATH \
 -d sample/build/output \
 -verbose \
@@ -70,12 +70,13 @@ $KOTLIN_HOME/bin/kotlinc \
 -Xplugin=$ANNOTATION_PROCESSOR \
 -P plugin:org.jetbrains.kotlin.kapt3:aptMode=stubs \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$ANNOTATION_PROCESSOR \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap/build/output/my-ap-lib.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=${JAVA_HOME}/lib/tools.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=${KOTLIN_HOME}/lib/kotlin-stdlib.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=${KOTLIN_HOME}/lib/kotlin-stdlib-jre7.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=${KOTLIN_HOME}/lib/kotlin-stdlib-jre8.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=${KOTLIN_HOME}/lib/kotlin-reflect.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=${KOTLIN_HOME}/lib/kotlin-compiler.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap/build/output/my-ap-lib.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/org.jetbrains.annotations-13.0.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/com.squareup.kotlinpoet-0.5.0.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:sources=$SOURCES \
