@@ -60,7 +60,7 @@ cp -r ap/src/main/resources/META-INF ap/build/output/META-INF
 info "RUNNING STEP 2..."
 $KOTLIN_HOME/bin/kotlinc \
 ./sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMain.kt \
--classpath $CLASSPATH \
+-classpath $SAMPLE_CLASSPATH \
 -d sample/build/output \
 -verbose \
 -module-name my-ap-client \
@@ -69,11 +69,21 @@ $KOTLIN_HOME/bin/kotlinc \
 -Xload-builtins-from-dependencies \
 -Xplugin=$ANNOTATION_PROCESSOR \
 -P plugin:org.jetbrains.kotlin.kapt3:aptMode=stubs \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$ANNOTATION_PROCESSOR \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap/build/output/my-ap-lib.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=${KOTLIN_HOME}/lib/kotlin-stdlib.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=${KOTLIN_HOME}/lib/kotlin-stdlib-jre7.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=${KOTLIN_HOME}/lib/kotlin-stdlib-jre8.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=${KOTLIN_HOME}/lib/kotlin-reflect.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=${KOTLIN_HOME}/lib/kotlin-compiler.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/org.jetbrains.annotations-13.0.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/com.squareup.kotlinpoet-0.5.0.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:sources=$SOURCES \
 -P plugin:org.jetbrains.kotlin.kapt3:classes=$CLASSES \
 -P plugin:org.jetbrains.kotlin.kapt3:incrementalData=$INCREMENTAL_DATA \
 -P plugin:org.jetbrains.kotlin.kapt3:stubs=$STUBS \
+-P plugin:org.jetbrains.kotlin.kapt3:apoptions="$GENERATED_DIR_MAP" \
+-P plugin:org.jetbrains.kotlin.kapt3:javacArguments="$EMPTY_MAP" \
 -P plugin:org.jetbrains.kotlin.kapt3:useLightAnalysis=$LIGHT_ANALYSIS \
 -P plugin:org.jetbrains.kotlin.kapt3:correctErrorTypes=$CORRECT_ERROR_TYPES \
 -P plugin:org.jetbrains.kotlin.kapt3:verbose=$VERBOSE \
