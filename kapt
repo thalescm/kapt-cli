@@ -64,10 +64,10 @@ $KOTLIN_HOME/bin/kotlinc \
 -classpath $SAMPLE_CLASSPATH \
 -d sample/build/output \
 -verbose \
--module-name my-ap-client \
--no-stdlib \
--no-reflect \
 -Xload-builtins-from-dependencies \
+-module-name my-ap-client \
+-no-reflect \
+-no-stdlib \
 -Xplugin=$ANNOTATION_PROCESSOR \
 -P plugin:org.jetbrains.kotlin.kapt3:aptMode=stubs,\
 plugin:org.jetbrains.kotlin.kapt3:apclasspath=$ANNOTATION_PROCESSOR,\
@@ -76,7 +76,8 @@ plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib.ja
 plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib-jre7.jar,\
 plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib-jre8.jar,\
 plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-reflect.jar,\
-plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-compiler.jar,\
+plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-compiler-embeddable.jar,\
+plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-script-runtime.jar,\
 plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap/build/output/my-ap-lib.jar,\
 plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/org.jetbrains.annotations-13.0.jar,\
 plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/com.squareup.kotlinpoet-0.5.0.jar,\

@@ -7,7 +7,7 @@ SAMPLE_CLASSPATH="$CLASSPATH:$WORKING_DIR/ap/build/output/my-ap-lib.jar"
 BUILD_FILE="module-template.xml"
 MODULE_NAME="app_debug"
 OUTPUT="build/output"
-ANNOTATION_PROCESSOR="$WORKING_DIR/libs/kotlin-annotation-processing.jar"
+ANNOTATION_PROCESSOR="$WORKING_DIR/libs/kotlin-annotation-processing-gradle.jar"
 
 # Kapt Plugin specific
 SOURCES="build/sources"
