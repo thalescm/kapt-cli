@@ -19,6 +19,7 @@ class VBProcessor : AbstractProcessor() {
     }
 
     override fun process(annotations: MutableSet<out TypeElement>, roundEnv: RoundEnvironment): Boolean {
+        println("++++ I'm processing the file ++++++")
         roundEnv.getElementsAnnotatedWith(ViewBinder::class.java)
                 .forEach {
                     val className = it.simpleName.toString()
