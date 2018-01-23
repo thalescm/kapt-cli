@@ -6,24 +6,14 @@ TOOLS_JAR="$WORKING_DIR/libs/tools.jar"
 
 CLASSPATH="$TOOLS_JAR"
 CLASSPATH="$WORKING_DIR/libs/kotlin-reflect.jar:$CLASSPATH"
-# CLASSPATH="$WORKING_DIR/libs/kotlin-script-runtime.jar:$CLASSPATH"
-# CLASSPATH="$WORKING_DIR/libs/kotlin-compiler-embeddable.jar:$CLASSPATH"
 CLASSPATH="$WORKING_DIR/libs/kotlin-stdlib.jar:$CLASSPATH"
-CLASSPATH="$WORKING_DIR/libs/kotlin-stdlib-jre7.jar:$CLASSPATH"
-CLASSPATH="$WORKING_DIR/libs/kotlin-stdlib-jre8.jar:$CLASSPATH"
-# CLASSPATH="$WORKING_DIR/libs/org.jetbrains.annotations-13.0.jar:$CLASSPATH"
 CLASSPATH="$WORKING_DIR/libs/com.squareup.kotlinpoet-0.5.0.jar:$CLASSPATH"
 
 SAMPLE_CLASSPATH="$CLASSPATH:$WORKING_DIR/ap/build/output/my-ap-lib.jar"
-# JAVAC_CLASSPATH=$(echo $SAMPLE_CLASSPATH | gsed -E "s/:/;/g")
+
 JAVAC_CLASSPATH="$SAMPLE_CLASSPATH"
 JAVAC_CLASSPATH="$JAVAC_CLASSPATH:$WORKING_DIR/sample/build/output"
 
-BUILD_FILE="module-template.xml"
-MODULE_NAME="app_debug"
-OUTPUT="sample/build/output"
-# ANNOTATION_PROCESSOR="$WORKING_DIR/libs/kotlin-annotation-processing.jar"
-# ANNOTATION_PROCESSOR="$WORKING_DIR/libs/kotlin-annotation-processing-maven.jar"
 ANNOTATION_PROCESSOR="$WORKING_DIR/libs/kotlin-annotation-processing.jar"
 
 # Kapt Plugin specific

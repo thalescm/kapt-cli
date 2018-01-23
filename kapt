@@ -72,11 +72,7 @@ sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMainJava.java \
 -Xplugin=$TOOLS_JAR \
 -Xplugin=$ANNOTATION_PROCESSOR \
 -P plugin:org.jetbrains.kotlin.kapt3:aptMode=stubs \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$ANNOTATION_PROCESSOR \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/tools.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib-jre7.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib-jre8.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-reflect.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-compiler.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap/build/output/my-ap-lib.jar \
@@ -109,11 +105,7 @@ sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMainJava.java \
 -Xplugin=$TOOLS_JAR \
 -Xplugin=$ANNOTATION_PROCESSOR \
 -P plugin:org.jetbrains.kotlin.kapt3:aptMode=apt \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$ANNOTATION_PROCESSOR \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/tools.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib-jre7.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib-jre8.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-reflect.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-compiler.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap/build/output/my-ap-lib.jar \
@@ -157,7 +149,6 @@ sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMainJava.java \
 
 cp -r sample/src/main/resources/META-INF sample/build/output/META-INF
 (cd sample/build/output && zip -r my-sample-lib META-INF br && mv my-sample-lib.zip my-sample-lib.jar && rm -rf META-INF && rm -rf br)
-
 
 info "Running the jar"
 $KOTLIN_HOME/bin/kotlin -cp sample/build/output/my-sample-lib.jar br.com.thales.buckt.AnnotatedMainKt \
