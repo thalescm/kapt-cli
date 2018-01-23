@@ -60,6 +60,7 @@ cp -r ap/src/main/resources/META-INF ap/build/output/META-INF
 info "Generating sample stubs"
 $KOTLIN_HOME/bin/kotlinc \
 sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMain.kt \
+sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMainJava.java \
 -Xadd-compiler-builtins \
 -classpath $SAMPLE_CLASSPATH \
 -d sample/build/output \
@@ -96,6 +97,7 @@ sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMain.kt \
 info "Running sample apt"
 $KOTLIN_HOME/bin/kotlinc \
 sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMain.kt \
+sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMainJava.java \
 -Xadd-compiler-builtins \
 -classpath $SAMPLE_CLASSPATH \
 -d sample/build/output \
@@ -129,10 +131,12 @@ sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMain.kt \
 && info "STEP 3 COMPLETE." || die "STEP 3 FAILED."
 
 # Step 4: Invoke kotlinc normally
-info "Compiling sample"
+info "Compiling sample kotlin"
 $KOTLIN_HOME/bin/kotlinc \
 sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMain.kt \
+sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMainJava.java \
 sample/build/generated/br/com/thales/buckt/NameViewBinder_.kt \
+sample/build/generated/br/com/thales/buckt/AnnotatedMainJava_.kt \
 -classpath $SAMPLE_CLASSPATH \
 -d sample/build/output \
 -verbose \
@@ -141,17 +145,15 @@ sample/build/generated/br/com/thales/buckt/NameViewBinder_.kt \
 -no-reflect \
 && info "STEP 4 COMPLETE." || die "STEP 4 FAILED."
 
-# Step 5: Invoke javac
-# javac \
-# -source 7 \
-# -target 7 \
-# -sourcepath  \
-# -g \
-# -bootclasspath $BOOT_CLASSPATH \
-# -verbose \
-# -d $OUTPUT \
-# -s $SOURCE \
-# -classpath $CLASSPATH
+# # Step 5: Invoke javac
+info "Compiling sample java"
+javac \
+-proc:none \
+-verbose \
+-classpath $JAVAC_CLASSPATH \
+-d sample/build/output \
+sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMainJava.java \
+&& info "STEP 5 COMPLETE." || die "STEP 5 FAILED."
 
 cp -r sample/src/main/resources/META-INF sample/build/output/META-INF
 (cd sample/build/output && zip -r my-sample-lib META-INF br && mv my-sample-lib.zip my-sample-lib.jar && rm -rf META-INF && rm -rf br)
