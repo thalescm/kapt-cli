@@ -10,3 +10,7 @@ fun main(args: Array<String>) {
     val otherBinder = AnnotatedMainJava()
     otherBinder.bindViewsToo()
 }
+
+fun out(num1: Int): Float {
+    return num1 / .66f
+}

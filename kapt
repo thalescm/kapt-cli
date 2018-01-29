@@ -24,6 +24,8 @@ info ( ) {
     echo "${bold}${blue} $* ${reset}"
 }
 
+set -xxx
+
 # Requires kotlin version 1.1.3+
 ensure kotlin 'https://kotlinlang.org/'
 
@@ -31,19 +33,17 @@ ensure kotlin 'https://kotlinlang.org/'
 source args
 
 # Set KOTLIN_HOME
-echo "$KOTLIN_HOME lala"
+
 if [ -z "$KOTLIN_HOME" ]; then
   echo "NO KOTLIN HOME FOUND, searching for it"
   export KOTLIN_HOME=$(KOTLIN_RUNNER=1 JAVACMD=echo kotlinc | awk 'NR>1' RS=' ' | grep -F kotlin.home= | cut -d= -f2)
 fi
-# export KOTLIN_HOME=$KOTLIN_HOME
-set -xxx
 
 # Step 1: Creating ap jar
 info "Creating annotation processing jar"
 $KOTLIN_HOME/bin/kotlinc \
-./ap/src/main/kotlin/br/com/thales/buckt/ViewBinder.kt \
-./ap/src/main/kotlin/br/com/thales/buckt/VBProcessor.kt \
+./ap/br/com/thales/buckt/ViewBinder.kt \
+./ap/br/com/thales/buckt/VBProcessor.kt \
 -classpath $CLASSPATH \
 -d ap/build/output \
 -verbose \
@@ -52,15 +52,14 @@ $KOTLIN_HOME/bin/kotlinc \
 -no-reflect \
 && info "STEP 1 COMPLETE." || die "STEP 1 FAILED."
 
-cp -r ap/src/main/resources/META-INF ap/build/output/META-INF
+cp -r ap/resources/META-INF ap/build/output/META-INF
 (cd ap/build/output && zip -r my-ap-lib META-INF br && mv my-ap-lib.zip my-ap-lib.jar && rm -rf META-INF && rm -rf br)
-
 
 # Step 1: Generate Stubs
 info "Generating sample stubs"
 $KOTLIN_HOME/bin/kotlinc \
-sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMain.kt \
-sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMainJava.java \
+sample/br/com/thales/buckt/AnnotatedMain.kt \
+sample/br/com/thales/buckt/AnnotatedMainJava.java \
 -Xadd-compiler-builtins \
 -classpath $SAMPLE_CLASSPATH \
 -d sample/build/output \
@@ -71,29 +70,29 @@ sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMainJava.java \
 -no-stdlib \
 -Xplugin=$TOOLS_JAR \
 -Xplugin=$ANNOTATION_PROCESSOR \
--P plugin:org.jetbrains.kotlin.kapt3:aptMode=stubs \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-reflect.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-compiler.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap/build/output/my-ap-lib.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/org.jetbrains.annotations-13.0.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/com.squareup.kotlinpoet-0.5.0.jar \
--P plugin:org.jetbrains.kotlin.kapt3:sources=$SOURCES \
--P plugin:org.jetbrains.kotlin.kapt3:classes=$CLASSES \
--P plugin:org.jetbrains.kotlin.kapt3:incrementalData=$INCREMENTAL_DATA \
--P plugin:org.jetbrains.kotlin.kapt3:stubs=$STUBS \
--P plugin:org.jetbrains.kotlin.kapt3:apoptions=$GENERATED_DIR_MAP \
--P plugin:org.jetbrains.kotlin.kapt3:javacArguments=$EMPTY_MAP \
--P plugin:org.jetbrains.kotlin.kapt3:useLightAnalysis=$LIGHT_ANALYSIS \
--P plugin:org.jetbrains.kotlin.kapt3:correctErrorTypes=$CORRECT_ERROR_TYPES \
--P plugin:org.jetbrains.kotlin.kapt3:verbose=$VERBOSE \
+-P plugin:org.jetbrains.kotlin.kapt3:aptMode=stubs,\
+plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib.jar,\
+plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-reflect.jar,\
+plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-compiler.jar,\
+plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap/build/output/my-ap-lib.jar,\
+plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/org.jetbrains.annotations-13.0.jar,\
+plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/com.squareup.kotlinpoet-0.5.0.jar,\
+plugin:org.jetbrains.kotlin.kapt3:sources=$SOURCES,\
+plugin:org.jetbrains.kotlin.kapt3:classes=$CLASSES,\
+plugin:org.jetbrains.kotlin.kapt3:incrementalData=$INCREMENTAL_DATA,\
+plugin:org.jetbrains.kotlin.kapt3:stubs=$STUBS,\
+plugin:org.jetbrains.kotlin.kapt3:apoptions=$GENERATED_DIR_MAP,\
+plugin:org.jetbrains.kotlin.kapt3:javacArguments=$EMPTY_MAP,\
+plugin:org.jetbrains.kotlin.kapt3:useLightAnalysis=$LIGHT_ANALYSIS,\
+plugin:org.jetbrains.kotlin.kapt3:correctErrorTypes=$CORRECT_ERROR_TYPES,\
+plugin:org.jetbrains.kotlin.kapt3:verbose=$VERBOSE \
 && info "STEP 2 COMPLETE." || die "STEP 2 FAILED."
 
 # Step 2: Run kapt
 info "Running sample apt"
 $KOTLIN_HOME/bin/kotlinc \
-sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMain.kt \
-sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMainJava.java \
+sample/br/com/thales/buckt/AnnotatedMain.kt \
+sample/br/com/thales/buckt/AnnotatedMainJava.java \
 -Xadd-compiler-builtins \
 -classpath $SAMPLE_CLASSPATH \
 -d sample/build/output \
@@ -125,10 +124,10 @@ sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMainJava.java \
 # Step 4: Invoke kotlinc normally
 info "Compiling sample kotlin"
 $KOTLIN_HOME/bin/kotlinc \
-sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMain.kt \
-sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMainJava.java \
+sample/br/com/thales/buckt/AnnotatedMain.kt \
 sample/build/generated/br/com/thales/buckt/NameViewBinder_.kt \
 sample/build/generated/br/com/thales/buckt/AnnotatedMainJava_.kt \
+sample/br/com/thales/buckt/AnnotatedMainJava.java \
 -classpath $SAMPLE_CLASSPATH \
 -d sample/build/output \
 -verbose \
@@ -137,17 +136,17 @@ sample/build/generated/br/com/thales/buckt/AnnotatedMainJava_.kt \
 -no-reflect \
 && info "STEP 4 COMPLETE." || die "STEP 4 FAILED."
 
-# # Step 5: Invoke javac
+Step 5: Invoke javac
 info "Compiling sample java"
 javac \
 -proc:none \
 -verbose \
 -classpath $JAVAC_CLASSPATH \
 -d sample/build/output \
-sample/src/main/kotlin/br/com/thales/buckt/AnnotatedMainJava.java \
+sample/br/com/thales/buckt/AnnotatedMainJava.java \
 && info "STEP 5 COMPLETE." || die "STEP 5 FAILED."
 
-cp -r sample/src/main/resources/META-INF sample/build/output/META-INF
+cp -r sample/resources/META-INF sample/build/output/META-INF
 (cd sample/build/output && zip -r my-sample-lib META-INF br && mv my-sample-lib.zip my-sample-lib.jar && rm -rf META-INF && rm -rf br)
 
 info "Running the jar"
