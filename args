@@ -13,7 +13,10 @@ JAVA_CLASSPATH="$WORKING_DIR/libs/com.squareup.javapoet-1.10.0.jar"
 # JAVA_CLASSPATH="$WORKING_DIR/libs/annotations-13.jar:$JAVA_CLASSPATH"
 
 
-SAMPLE_CLASSPATH="$CLASSPATH:$WORKING_DIR/ap/build/output/my-ap-lib.jar"
+SAMPLE_CLASSPATH="$CLASSPATH:$WORKING_DIR/ap-kt/build/output/my-ap-kt-lib.jar"
+# SAMPLE_CLASSPATH="$CLASSPATH:$WORKING_DIR/ap-java/build/output/my-ap-java-lib.jar"
+
+KAPT_CLASSPATH="$SAMPLE_CLASSPATH:$WORKING_DIR/libs/kotlin-reflect.jar"
 
 JAVAC_CLASSPATH="$SAMPLE_CLASSPATH"
 JAVAC_CLASSPATH="$JAVAC_CLASSPATH:$WORKING_DIR/sample/build/output"
@@ -29,4 +32,4 @@ LIGHT_ANALYSIS="true"
 CORRECT_ERROR_TYPES="false"
 VERBOSE="true"
 EMPTY_MAP="rO0ABXcEAAAAAA==" # encoded empty map
-GENERATED_DIR_MAP="rO0ABXdtAAAAAQAVa2FwdC5rb3RsaW4uZ2VuZXJhdGVkAFAvVXNlcnMvdGhhbGVzbWFjaGFkby9Eb2N1bWVudHMvUHJvamVjdHMvcGVyc29uYWwva2FwdC1jbGkvc2FtcGxlL2J1aWxkL2dlbmVyYXRlZA==" # kapt.kotlin.generated to sample/build/output
+GENERATED_DIR_MAP="rO0ABXdtAAAAAQAVa2FwdC5rb3RsaW4uZ2VuZXJhdGVkAFAvVXNlcnMvdGhhbGVzbWFjaGFkby9Eb2N1bWVudHMvUHJvamVjdHMvcGVyc29uYWwva2FwdC1jbGkvc2FtcGxlL2J1aWxkL2dlbmVyYXRlZA==" # kapt.kotlin.generated to sample/build/generated
