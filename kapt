@@ -116,6 +116,8 @@ sample/br/com/thales/buckt/AnnotatedMainJava.java \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-reflect.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap-java/build/output/my-ap-java-lib.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap-kt/build/output/my-ap-kt-lib.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-annotation-processing.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-compiler.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:sources=$SOURCES \
 -P plugin:org.jetbrains.kotlin.kapt3:classes=$CLASSES \
 -P plugin:org.jetbrains.kotlin.kapt3:incrementalData=$INCREMENTAL_DATA \

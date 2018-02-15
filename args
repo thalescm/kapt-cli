@@ -16,6 +16,9 @@ JAVA_CLASSPATH="$WORKING_DIR/libs/com.squareup.javapoet-1.10.0.jar"
 # SAMPLE_CLASSPATH="$CLASSPATH:$WORKING_DIR/ap-kt/build/output/my-ap-kt-lib.jar"
 APT_CLASSPATH="$JAVA_CLASSPATH:$WORKING_DIR/ap-java/build/output/my-ap-java-lib.jar"
 APT_CLASSPATH="$APT_CLASSPATH:$WORKING_DIR/ap-kt/build/output/my-ap-kt-lib.jar"
+APT_CLASSPATH="$APT_CLASSPATH:$WORKING_DIR/libs/kotlin-compiler.jar"
+APT_CLASSPATH="$APT_CLASSPATH:$WORKING_DIR/libs/kotlin-annotation-processing.jar"
+
 
 SAMPLE_CLASSPATH="$WORKING_DIR/libs/kotlin-stdlib.jar"
 SAMPLE_CLASSPATH="$WORKING_DIR/ap-java/build/output/my-ap-java-lib.jar:$SAMPLE_CLASSPATH"
