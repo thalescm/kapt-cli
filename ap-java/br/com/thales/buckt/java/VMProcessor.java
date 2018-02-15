@@ -1,4 +1,4 @@
-package br.com.thales.buckt;
+package br.com.thales.buckt.java;
 
 import java.io.IOException;
 import java.io.OutputStream;

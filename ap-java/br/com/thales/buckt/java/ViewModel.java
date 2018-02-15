@@ -1,4 +1,4 @@
-package br.com.thales.buckt;
+package br.com.thales.buckt.java;
 
 import java.lang.annotation.Target;
 import java.lang.annotation.Retention;

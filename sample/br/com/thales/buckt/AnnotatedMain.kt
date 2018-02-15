@@ -1,5 +1,8 @@
 package br.com.thales.buckt
 
+import br.com.thales.buckt.java.ViewModel
+import br.com.thales.buckt.NameViewModel_
+
 /* @ViewBinder
 class NameViewBinder */
 

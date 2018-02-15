@@ -56,8 +56,8 @@ cp -r ap-kt/resources/META-INF ap-kt/build/output/META-INF
 # Step 2: Creating ap jar
 info "Creating annotation processing jar"
 javac \
-./ap-java/br/com/thales/buckt/ViewModel.java \
-./ap-java/br/com/thales/buckt/VMProcessor.java \
+./ap-java/br/com/thales/buckt/java/ViewModel.java \
+./ap-java/br/com/thales/buckt/java/VMProcessor.java \
 -classpath $JAVA_CLASSPATH \
 -d ap-java/build/output \
 -verbose \
