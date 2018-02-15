@@ -18,7 +18,7 @@ import javax.tools.JavaFileObject;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 
-@SupportedAnnotationTypes("br.com.thales.buckt.ViewModel")
+@SupportedAnnotationTypes("br.com.thales.buckt.java.ViewModel")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedOptions({})
 public class VMProcessor extends AbstractProcessor {
