@@ -72,7 +72,7 @@ $KOTLIN_HOME/bin/kotlinc \
 sample/br/com/thales/buckt/AnnotatedMain.kt \
 sample/br/com/thales/buckt/AnnotatedMainJava.java \
 -Xadd-compiler-builtins \
--classpath $SAMPLE_CLASSPATH \
+-classpath $APT_CLASSPATH \
 -d sample/build/output \
 -verbose \
 -Xload-builtins-from-dependencies \
@@ -83,7 +83,7 @@ sample/br/com/thales/buckt/AnnotatedMainJava.java \
 -Xplugin=$ANNOTATION_PROCESSOR \
 -P plugin:org.jetbrains.kotlin.kapt3:aptMode=stubs \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap-kt/build/output/my-ap-kt-lib.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap-java/build/output/my-ap-java-lib.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:sources=$SOURCES \
 -P plugin:org.jetbrains.kotlin.kapt3:classes=$CLASSES \
 -P plugin:org.jetbrains.kotlin.kapt3:incrementalData=$INCREMENTAL_DATA \
@@ -101,7 +101,7 @@ $KOTLIN_HOME/bin/kotlinc \
 sample/br/com/thales/buckt/AnnotatedMain.kt \
 sample/br/com/thales/buckt/AnnotatedMainJava.java \
 -Xadd-compiler-builtins \
--classpath $SAMPLE_CLASSPATH \
+-classpath $APT_CLASSPATH \
 -d sample/build/output \
 -verbose \
 -Xload-builtins-from-dependencies \
@@ -113,7 +113,7 @@ sample/br/com/thales/buckt/AnnotatedMainJava.java \
 -P plugin:org.jetbrains.kotlin.kapt3:aptMode=apt \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-reflect.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap-kt/build/output/my-ap-kt-lib.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap-java/build/output/my-ap-java-lib.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:sources=$SOURCES \
 -P plugin:org.jetbrains.kotlin.kapt3:classes=$CLASSES \
 -P plugin:org.jetbrains.kotlin.kapt3:incrementalData=$INCREMENTAL_DATA \
@@ -125,30 +125,30 @@ sample/br/com/thales/buckt/AnnotatedMainJava.java \
 -P plugin:org.jetbrains.kotlin.kapt3:verbose=$VERBOSE \
 && info "STEP 4 COMPLETE." || die "STEP 4 FAILED."
 #
-# # Step 4: Invoke kotlinc normally
-# info "Compiling sample kotlin"
-# $KOTLIN_HOME/bin/kotlinc \
-# sample/br/com/thales/buckt/AnnotatedMain.kt \
-# sample/build/generated/br/com/thales/buckt/NameViewBinder_.kt \
-# sample/build/generated/br/com/thales/buckt/AnnotatedMainJava_.kt \
-# sample/br/com/thales/buckt/AnnotatedMainJava.java \
-# -classpath $SAMPLE_CLASSPATH \
-# -d sample/build/output \
-# -verbose \
-# -module-name sample \
-# -no-stdlib \
-# -no-reflect \
-# && info "STEP 4 COMPLETE." || die "STEP 4 FAILED."
+# Step 4: Invoke kotlinc normally
+info "Compiling sample kotlin"
+$KOTLIN_HOME/bin/kotlinc \
+sample/br/com/thales/buckt/AnnotatedMain.kt \
+sample/br/com/thales/buckt/AnnotatedMainJava.java \
+sample/build/generated/br/com/thales/buckt/NameViewModel_.java \
+-classpath $SAMPLE_CLASSPATH \
+-d sample/build/output \
+-verbose \
+-module-name sample \
+-no-stdlib \
+-no-reflect \
+&& info "STEP 4 COMPLETE." || die "STEP 4 FAILED."
 #
-# Step 5: Invoke javac
-# info "Compiling sample java"
-# javac \
-# -proc:none \
-# -verbose \
-# -classpath $JAVAC_CLASSPATH \
-# -d sample/build/output \
-# sample/br/com/thales/buckt/AnnotatedMainJava.java \
-# && info "STEP 5 COMPLETE." || die "STEP 5 FAILED."
+Step 5: Invoke javac
+info "Compiling sample java"
+javac \
+-proc:none \
+-verbose \
+-classpath $JAVAC_CLASSPATH \
+-d sample/build/output \
+sample/br/com/thales/buckt/AnnotatedMainJava.java \
+sample/build/generated/br/com/thales/buckt/NameViewModel_.java \
+&& info "STEP 5 COMPLETE." || die "STEP 5 FAILED."
 #
 # cp -r sample/resources/META-INF sample/build/output/META-INF
 # (cd sample/build/output && zip -r my-sample-lib META-INF br && mv my-sample-lib.zip my-sample-lib.jar && rm -rf META-INF && rm -rf br)

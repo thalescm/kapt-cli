@@ -13,8 +13,11 @@ JAVA_CLASSPATH="$WORKING_DIR/libs/com.squareup.javapoet-1.10.0.jar"
 # JAVA_CLASSPATH="$WORKING_DIR/libs/annotations-13.jar:$JAVA_CLASSPATH"
 
 
-SAMPLE_CLASSPATH="$CLASSPATH:$WORKING_DIR/ap-kt/build/output/my-ap-kt-lib.jar"
-# SAMPLE_CLASSPATH="$CLASSPATH:$WORKING_DIR/ap-java/build/output/my-ap-java-lib.jar"
+# SAMPLE_CLASSPATH="$CLASSPATH:$WORKING_DIR/ap-kt/build/output/my-ap-kt-lib.jar"
+APT_CLASSPATH="$JAVA_CLASSPATH:$WORKING_DIR/ap-java/build/output/my-ap-java-lib.jar"
+
+SAMPLE_CLASSPATH="$WORKING_DIR/libs/kotlin-stdlib.jar"
+SAMPLE_CLASSPATH="$WORKING_DIR/ap-java/build/output/my-ap-java-lib.jar:$SAMPLE_CLASSPATH"
 
 KAPT_CLASSPATH="$SAMPLE_CLASSPATH:$WORKING_DIR/libs/kotlin-reflect.jar"
 
@@ -24,7 +27,7 @@ JAVAC_CLASSPATH="$JAVAC_CLASSPATH:$WORKING_DIR/sample/build/output"
 ANNOTATION_PROCESSOR="$WORKING_DIR/libs/kotlin-annotation-processing.jar"
 
 # Kapt Plugin specific
-SOURCES="build/sources"
+SOURCES="sample/build/generated"
 CLASSES="build/classes"
 STUBS="build/stubs"
 INCREMENTAL_DATA="build/incremental"
