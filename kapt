@@ -130,7 +130,7 @@ info "Compiling sample kotlin"
 $KOTLIN_HOME/bin/kotlinc \
 sample/br/com/thales/buckt/AnnotatedMain.kt \
 sample/br/com/thales/buckt/AnnotatedMainJava.java \
-sample/build/generated/br/com/thales/buckt/NameViewModel_.java \
+sample/build/generated \
 -classpath $SAMPLE_CLASSPATH \
 -d sample/build/output \
 -verbose \
@@ -147,12 +147,12 @@ javac \
 -classpath $JAVAC_CLASSPATH \
 -d sample/build/output \
 sample/br/com/thales/buckt/AnnotatedMainJava.java \
-sample/build/generated/br/com/thales/buckt/NameViewModel_.java \
+$(find sample/build/generated -name "*.java") \
 && info "STEP 5 COMPLETE." || die "STEP 5 FAILED."
 #
-# cp -r sample/resources/META-INF sample/build/output/META-INF
-# (cd sample/build/output && zip -r my-sample-lib META-INF br && mv my-sample-lib.zip my-sample-lib.jar && rm -rf META-INF && rm -rf br)
-#
-# info "Running the jar"
-# $KOTLIN_HOME/bin/kotlin -cp sample/build/output/my-sample-lib.jar br.com.thales.buckt.AnnotatedMainKt \
-# && info "STEP 6 COMPLETE." || die "STEP 6 FAILED."
+cp -r sample/resources/META-INF sample/build/output/META-INF
+(cd sample/build/output && zip -r my-sample-lib META-INF br && mv my-sample-lib.zip my-sample-lib.jar && rm -rf META-INF && rm -rf br)
+
+info "Running the jar"
+$KOTLIN_HOME/bin/kotlin -cp sample/build/output/my-sample-lib.jar br.com.thales.buckt.AnnotatedMainKt \
+&& info "STEP 6 COMPLETE." || die "STEP 6 FAILED."
