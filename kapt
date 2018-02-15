@@ -39,116 +39,123 @@ if [ -z "$KOTLIN_HOME" ]; then
   export KOTLIN_HOME=$(KOTLIN_RUNNER=1 JAVACMD=echo kotlinc | awk 'NR>1' RS=' ' | grep -F kotlin.home= | cut -d= -f2)
 fi
 
-# Step 1: Creating ap jar
+# # Step 1: Creating ap jar
+# info "Creating annotation processing jar"
+# $KOTLIN_HOME/bin/kotlinc \
+# ./ap-kt/br/com/thales/buckt/ViewBinder.kt \
+# ./ap-kt/br/com/thales/buckt/VBProcessor.kt \
+# -classpath $CLASSPATH \
+# -d ap-kt/build/output \
+# -verbose \
+# -module-name my-kt-ap \
+# -no-stdlib \
+# -no-reflect \
+# && info "STEP 1 COMPLETE." || die "STEP 1 FAILED."
+#
+# # cp -r ap/resources/META-INF ap/build/output/META-INF
+# (cd ap-kt/build/output && zip -r my-ap-kt-lib META-INF br && mv my-ap-kt-lib.zip my-ap-kt-lib.jar && rm -rf META-INF && rm -rf br)
+
+# Step 2: Creating ap jar
 info "Creating annotation processing jar"
-$KOTLIN_HOME/bin/kotlinc \
-./ap/br/com/thales/buckt/ViewBinder.kt \
-./ap/br/com/thales/buckt/VBProcessor.kt \
--classpath $CLASSPATH \
--d ap/build/output \
+javac \
+./ap-java/br/com/thales/buckt/ViewModel.java \
+./ap-java/br/com/thales/buckt/VMProcessor.java \
+-classpath $JAVA_CLASSPATH \
+-d ap-java/build/output \
 -verbose \
--module-name my-ap \
--no-stdlib \
--no-reflect \
-&& info "STEP 1 COMPLETE." || die "STEP 1 FAILED."
-
-cp -r ap/resources/META-INF ap/build/output/META-INF
-(cd ap/build/output && zip -r my-ap-lib META-INF br && mv my-ap-lib.zip my-ap-lib.jar && rm -rf META-INF && rm -rf br)
-
-# Step 1: Generate Stubs
-info "Generating sample stubs"
-$KOTLIN_HOME/bin/kotlinc \
-sample/br/com/thales/buckt/AnnotatedMain.kt \
-sample/br/com/thales/buckt/AnnotatedMainJava.java \
--Xadd-compiler-builtins \
--classpath $SAMPLE_CLASSPATH \
--d sample/build/output \
--verbose \
--Xload-builtins-from-dependencies \
--module-name my-ap-client \
--no-reflect \
--no-stdlib \
--Xplugin=$TOOLS_JAR \
--Xplugin=$ANNOTATION_PROCESSOR \
--P plugin:org.jetbrains.kotlin.kapt3:aptMode=stubs,\
-plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib.jar,\
-plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-reflect.jar,\
-plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-compiler.jar,\
-plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap/build/output/my-ap-lib.jar,\
-plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/org.jetbrains.annotations-13.0.jar,\
-plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/com.squareup.kotlinpoet-0.5.0.jar,\
-plugin:org.jetbrains.kotlin.kapt3:sources=$SOURCES,\
-plugin:org.jetbrains.kotlin.kapt3:classes=$CLASSES,\
-plugin:org.jetbrains.kotlin.kapt3:incrementalData=$INCREMENTAL_DATA,\
-plugin:org.jetbrains.kotlin.kapt3:stubs=$STUBS,\
-plugin:org.jetbrains.kotlin.kapt3:apoptions=$GENERATED_DIR_MAP,\
-plugin:org.jetbrains.kotlin.kapt3:javacArguments=$EMPTY_MAP,\
-plugin:org.jetbrains.kotlin.kapt3:useLightAnalysis=$LIGHT_ANALYSIS,\
-plugin:org.jetbrains.kotlin.kapt3:correctErrorTypes=$CORRECT_ERROR_TYPES,\
-plugin:org.jetbrains.kotlin.kapt3:verbose=$VERBOSE \
 && info "STEP 2 COMPLETE." || die "STEP 2 FAILED."
 
-# Step 2: Run kapt
-info "Running sample apt"
-$KOTLIN_HOME/bin/kotlinc \
-sample/br/com/thales/buckt/AnnotatedMain.kt \
-sample/br/com/thales/buckt/AnnotatedMainJava.java \
--Xadd-compiler-builtins \
--classpath $SAMPLE_CLASSPATH \
--d sample/build/output \
--verbose \
--Xload-builtins-from-dependencies \
--module-name my-ap-client \
--no-reflect \
--no-stdlib \
--Xplugin=$TOOLS_JAR \
--Xplugin=$ANNOTATION_PROCESSOR \
--P plugin:org.jetbrains.kotlin.kapt3:aptMode=apt \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-reflect.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-compiler.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap/build/output/my-ap-lib.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/org.jetbrains.annotations-13.0.jar \
--P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/com.squareup.kotlinpoet-0.5.0.jar \
--P plugin:org.jetbrains.kotlin.kapt3:sources=$SOURCES \
--P plugin:org.jetbrains.kotlin.kapt3:classes=$CLASSES \
--P plugin:org.jetbrains.kotlin.kapt3:incrementalData=$INCREMENTAL_DATA \
--P plugin:org.jetbrains.kotlin.kapt3:stubs=$STUBS \
--P plugin:org.jetbrains.kotlin.kapt3:apoptions=$GENERATED_DIR_MAP \
--P plugin:org.jetbrains.kotlin.kapt3:javacArguments=$EMPTY_MAP \
--P plugin:org.jetbrains.kotlin.kapt3:useLightAnalysis=$LIGHT_ANALYSIS \
--P plugin:org.jetbrains.kotlin.kapt3:correctErrorTypes=$CORRECT_ERROR_TYPES \
--P plugin:org.jetbrains.kotlin.kapt3:verbose=$VERBOSE \
-&& info "STEP 3 COMPLETE." || die "STEP 3 FAILED."
+cp -r ap-java/resources/META-INF ap-java/build/output/META-INF
+(cd ap-java/build/output && zip -r my-ap-java-lib META-INF br && mv my-ap-java-lib.zip my-ap-java-lib.jar && rm -rf META-INF && rm -rf br)
 
-# Step 4: Invoke kotlinc normally
-info "Compiling sample kotlin"
-$KOTLIN_HOME/bin/kotlinc \
-sample/br/com/thales/buckt/AnnotatedMain.kt \
-sample/build/generated/br/com/thales/buckt/NameViewBinder_.kt \
-sample/build/generated/br/com/thales/buckt/AnnotatedMainJava_.kt \
-sample/br/com/thales/buckt/AnnotatedMainJava.java \
--classpath $SAMPLE_CLASSPATH \
--d sample/build/output \
--verbose \
--module-name sample \
--no-stdlib \
--no-reflect \
-&& info "STEP 4 COMPLETE." || die "STEP 4 FAILED."
-
-Step 5: Invoke javac
-info "Compiling sample java"
-javac \
--proc:none \
--verbose \
--classpath $JAVAC_CLASSPATH \
--d sample/build/output \
-sample/br/com/thales/buckt/AnnotatedMainJava.java \
-&& info "STEP 5 COMPLETE." || die "STEP 5 FAILED."
-
-cp -r sample/resources/META-INF sample/build/output/META-INF
-(cd sample/build/output && zip -r my-sample-lib META-INF br && mv my-sample-lib.zip my-sample-lib.jar && rm -rf META-INF && rm -rf br)
-
-info "Running the jar"
-$KOTLIN_HOME/bin/kotlin -cp sample/build/output/my-sample-lib.jar br.com.thales.buckt.AnnotatedMainKt \
-&& info "STEP 6 COMPLETE." || die "STEP 6 FAILED."
+# # Step 1: Generate Stubs
+# info "Generating sample stubs"
+# $KOTLIN_HOME/bin/kotlinc \
+# sample/br/com/thales/buckt/AnnotatedMain.kt \
+# sample/br/com/thales/buckt/AnnotatedMainJava.java \
+# -Xadd-compiler-builtins \
+# -classpath $SAMPLE_CLASSPATH \
+# -d sample/build/output \
+# -verbose \
+# -Xload-builtins-from-dependencies \
+# -module-name my-ap-client \
+# -no-reflect \
+# -no-stdlib \
+# -Xplugin=$TOOLS_JAR \
+# -Xplugin=$ANNOTATION_PROCESSOR \
+# -P plugin:org.jetbrains.kotlin.kapt3:aptMode=stubs \
+# -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib.jar \
+# -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap/build/output/my-ap-lib.jar \
+# -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/com.squareup.kotlinpoet-0.5.0.jar \
+# -P plugin:org.jetbrains.kotlin.kapt3:sources=$SOURCES \
+# -P plugin:org.jetbrains.kotlin.kapt3:classes=$CLASSES \
+# -P plugin:org.jetbrains.kotlin.kapt3:incrementalData=$INCREMENTAL_DATA \
+# -P plugin:org.jetbrains.kotlin.kapt3:stubs=$STUBS \
+# -P plugin:org.jetbrains.kotlin.kapt3:apoptions=$GENERATED_DIR_MAP \
+# -P plugin:org.jetbrains.kotlin.kapt3:javacArguments=$EMPTY_MAP \
+# -P plugin:org.jetbrains.kotlin.kapt3:useLightAnalysis=$LIGHT_ANALYSIS \
+# -P plugin:org.jetbrains.kotlin.kapt3:correctErrorTypes=$CORRECT_ERROR_TYPES \
+# -P plugin:org.jetbrains.kotlin.kapt3:verbose=$VERBOSE \
+# && info "STEP 2 COMPLETE." || die "STEP 2 FAILED."
+#
+# # Step 2: Run kapt
+# info "Running sample apt"
+# $KOTLIN_HOME/bin/kotlinc \
+# sample/br/com/thales/buckt/AnnotatedMain.kt \
+# sample/br/com/thales/buckt/AnnotatedMainJava.java \
+# -Xadd-compiler-builtins \
+# -classpath $SAMPLE_CLASSPATH \
+# -d sample/build/output \
+# -verbose \
+# -Xload-builtins-from-dependencies \
+# -module-name my-ap-client \
+# -no-reflect \
+# -no-stdlib \
+# -Xplugin=$TOOLS_JAR \
+# -Xplugin=$ANNOTATION_PROCESSOR \
+# -P plugin:org.jetbrains.kotlin.kapt3:aptMode=apt \
+# -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-stdlib.jar \
+# -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap/build/output/my-ap-lib.jar \
+# -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/com.squareup.kotlinpoet-0.5.0.jar \
+# -P plugin:org.jetbrains.kotlin.kapt3:sources=$SOURCES \
+# -P plugin:org.jetbrains.kotlin.kapt3:classes=$CLASSES \
+# -P plugin:org.jetbrains.kotlin.kapt3:incrementalData=$INCREMENTAL_DATA \
+# -P plugin:org.jetbrains.kotlin.kapt3:stubs=$STUBS \
+# -P plugin:org.jetbrains.kotlin.kapt3:apoptions=$GENERATED_DIR_MAP \
+# -P plugin:org.jetbrains.kotlin.kapt3:javacArguments=$EMPTY_MAP \
+# -P plugin:org.jetbrains.kotlin.kapt3:useLightAnalysis=$LIGHT_ANALYSIS \
+# -P plugin:org.jetbrains.kotlin.kapt3:correctErrorTypes=$CORRECT_ERROR_TYPES \
+# -P plugin:org.jetbrains.kotlin.kapt3:verbose=$VERBOSE \
+# && info "STEP 3 COMPLETE." || die "STEP 3 FAILED."
+#
+# # Step 4: Invoke kotlinc normally
+# info "Compiling sample kotlin"
+# $KOTLIN_HOME/bin/kotlinc \
+# sample/br/com/thales/buckt/AnnotatedMain.kt \
+# sample/build/generated/br/com/thales/buckt/NameViewBinder_.kt \
+# sample/build/generated/br/com/thales/buckt/AnnotatedMainJava_.kt \
+# sample/br/com/thales/buckt/AnnotatedMainJava.java \
+# -classpath $SAMPLE_CLASSPATH \
+# -d sample/build/output \
+# -verbose \
+# -module-name sample \
+# -no-stdlib \
+# -no-reflect \
+# && info "STEP 4 COMPLETE." || die "STEP 4 FAILED."
+#
+# Step 5: Invoke javac
+# info "Compiling sample java"
+# javac \
+# -proc:none \
+# -verbose \
+# -classpath $JAVAC_CLASSPATH \
+# -d sample/build/output \
+# sample/br/com/thales/buckt/AnnotatedMainJava.java \
+# && info "STEP 5 COMPLETE." || die "STEP 5 FAILED."
+#
+# cp -r sample/resources/META-INF sample/build/output/META-INF
+# (cd sample/build/output && zip -r my-sample-lib META-INF br && mv my-sample-lib.zip my-sample-lib.jar && rm -rf META-INF && rm -rf br)
+#
+# info "Running the jar"
+# $KOTLIN_HOME/bin/kotlin -cp sample/build/output/my-sample-lib.jar br.com.thales.buckt.AnnotatedMainKt \
+# && info "STEP 6 COMPLETE." || die "STEP 6 FAILED."
