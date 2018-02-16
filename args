@@ -22,6 +22,7 @@ APT_CLASSPATH="$APT_CLASSPATH:$WORKING_DIR/libs/kotlin-annotation-processing.jar
 
 SAMPLE_CLASSPATH="$WORKING_DIR/libs/kotlin-stdlib.jar"
 SAMPLE_CLASSPATH="$WORKING_DIR/ap-java/build/output/my-ap-java-lib.jar:$SAMPLE_CLASSPATH"
+SAMPLE_CLASSPATH="$WORKING_DIR/ap-kt/build/output/my-ap-kt-lib.jar:$SAMPLE_CLASSPATH"
 
 KAPT_CLASSPATH="$SAMPLE_CLASSPATH:$WORKING_DIR/libs/kotlin-reflect.jar"
 

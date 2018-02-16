@@ -118,6 +118,8 @@ sample/br/com/thales/buckt/AnnotatedMainJava.java \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/ap-kt/build/output/my-ap-kt-lib.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-annotation-processing.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/kotlin-compiler.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/com.squareup.javapoet-1.10.0.jar \
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=$WORKING_DIR/libs/com.squareup.kotlinpoet-0.5.0.jar \
 -P plugin:org.jetbrains.kotlin.kapt3:sources=$SOURCES \
 -P plugin:org.jetbrains.kotlin.kapt3:classes=$CLASSES \
 -P plugin:org.jetbrains.kotlin.kapt3:incrementalData=$INCREMENTAL_DATA \
