@@ -4,5 +4,9 @@ both for normal compilation and for running kapt.
 
 This is working for a project with mixed kotlin and java files!
 
+This can also be built with buck with [this branch](https://github.com/thalescm/buck/tree/thalescm-kapt)
+
 ## Usage
-`./clean && ./kapt`
+`./clean && ./kapt`  
+or  
+`$PATH_TO_BUCK_BIN_ON_THE_BRANCH_ABOVE build sample`

@@ -1,0 +1,8 @@
+# Buck
+/buck-out
+/.buckconfig.local
+/.buckd
+/.buckjavaargs.local
+/.bucklogging.local.properties
+.fakebuckversion
+/.nobuckcheck

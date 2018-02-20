@@ -1,0 +1,7 @@
+[alias]
+    ap-kt = //ap-kt:ap-kt
+    ap-java = //ap-java:ap-java
+    sample = //sample:kt-lib
+
+[ndk]
+  ndk_version = 15.2.4203891
