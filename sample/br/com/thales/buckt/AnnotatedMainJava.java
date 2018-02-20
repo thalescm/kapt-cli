@@ -1,5 +1,7 @@
 package br.com.thales.buckt;
 
+import br.com.thales.buckt.kotlin.ViewBinder;
+
 @ViewBinder
 public class AnnotatedMainJava {
 

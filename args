@@ -4,12 +4,27 @@ WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 TOOLS_JAR="$WORKING_DIR/libs/tools.jar"
 
-CLASSPATH="$TOOLS_JAR"
-CLASSPATH="$WORKING_DIR/libs/kotlin-reflect.jar:$CLASSPATH"
+# CLASSPATH="$TOOLS_JAR"
+# CLASSPATH="$WORKING_DIR/libs/kotlin-reflect.jar:$CLASSPATH"
 CLASSPATH="$WORKING_DIR/libs/kotlin-stdlib.jar:$CLASSPATH"
 CLASSPATH="$WORKING_DIR/libs/com.squareup.kotlinpoet-0.5.0.jar:$CLASSPATH"
 
-SAMPLE_CLASSPATH="$CLASSPATH:$WORKING_DIR/ap/build/output/my-ap-lib.jar"
+JAVA_CLASSPATH="$WORKING_DIR/libs/com.squareup.javapoet-1.10.0.jar"
+# JAVA_CLASSPATH="$WORKING_DIR/libs/annotations-13.jar:$JAVA_CLASSPATH"
+
+
+# SAMPLE_CLASSPATH="$CLASSPATH:$WORKING_DIR/ap-kt/build/output/my-ap-kt-lib.jar"
+APT_CLASSPATH="$JAVA_CLASSPATH:$WORKING_DIR/ap-java/build/output/my-ap-java-lib.jar"
+APT_CLASSPATH="$APT_CLASSPATH:$WORKING_DIR/ap-kt/build/output/my-ap-kt-lib.jar"
+APT_CLASSPATH="$APT_CLASSPATH:$WORKING_DIR/libs/kotlin-compiler.jar"
+APT_CLASSPATH="$APT_CLASSPATH:$WORKING_DIR/libs/kotlin-annotation-processing.jar"
+
+
+SAMPLE_CLASSPATH="$WORKING_DIR/libs/kotlin-stdlib.jar"
+SAMPLE_CLASSPATH="$WORKING_DIR/ap-java/build/output/my-ap-java-lib.jar:$SAMPLE_CLASSPATH"
+SAMPLE_CLASSPATH="$WORKING_DIR/ap-kt/build/output/my-ap-kt-lib.jar:$SAMPLE_CLASSPATH"
+
+KAPT_CLASSPATH="$SAMPLE_CLASSPATH:$WORKING_DIR/libs/kotlin-reflect.jar"
 
 JAVAC_CLASSPATH="$SAMPLE_CLASSPATH"
 JAVAC_CLASSPATH="$JAVAC_CLASSPATH:$WORKING_DIR/sample/build/output"
@@ -17,7 +32,7 @@ JAVAC_CLASSPATH="$JAVAC_CLASSPATH:$WORKING_DIR/sample/build/output"
 ANNOTATION_PROCESSOR="$WORKING_DIR/libs/kotlin-annotation-processing.jar"
 
 # Kapt Plugin specific
-SOURCES="build/sources"
+SOURCES="sample/build/generated"
 CLASSES="build/classes"
 STUBS="build/stubs"
 INCREMENTAL_DATA="build/incremental"
@@ -25,4 +40,4 @@ LIGHT_ANALYSIS="true"
 CORRECT_ERROR_TYPES="false"
 VERBOSE="true"
 EMPTY_MAP="rO0ABXcEAAAAAA==" # encoded empty map
-GENERATED_DIR_MAP="rO0ABXdtAAAAAQAVa2FwdC5rb3RsaW4uZ2VuZXJhdGVkAFAvVXNlcnMvdGhhbGVzbWFjaGFkby9Eb2N1bWVudHMvUHJvamVjdHMvcGVyc29uYWwva2FwdC1jbGkvc2FtcGxlL2J1aWxkL2dlbmVyYXRlZA==" # kapt.kotlin.generated to sample/build/output
+GENERATED_DIR_MAP="rO0ABXdtAAAAAQAVa2FwdC5rb3RsaW4uZ2VuZXJhdGVkAFAvVXNlcnMvdGhhbGVzbWFjaGFkby9Eb2N1bWVudHMvUHJvamVjdHMvcGVyc29uYWwva2FwdC1jbGkvc2FtcGxlL2J1aWxkL2dlbmVyYXRlZA==" # kapt.kotlin.generated to sample/build/generated

@@ -1,0 +1,28 @@
+java_annotation_processor(
+    name = "ap-java",
+    deps = [
+        ":java-ap-lib",
+    ],
+    processor_class = "br.com.thales.buckt.java.VMProcessor",
+    visibility = [
+      'PUBLIC',
+    ],
+)
+
+java_library(
+    name = "java-ap-lib",
+    srcs = [
+        "br/com/thales/buckt/java/ViewModel.java",
+        "br/com/thales/buckt/java/VMProcessor.java",
+    ],
+    deps = [
+      '//libs:com.squareup.javapoet-1.10.0.jar',
+    ],
+    resources = glob([
+        'resources/**',
+    ]),
+    resources_root = "resources",
+    visibility = [
+      'PUBLIC',
+    ],
+)

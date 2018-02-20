@@ -1,0 +1,18 @@
+kotlin_library(
+  name = 'kt-lib',
+  srcs = [
+    'br/com/thales/buckt/AnnotatedMain.kt',
+    'br/com/thales/buckt/AnnotatedMainJava.java',
+  ],
+  deps = [
+    "//ap-java:java-ap-lib",
+    "//ap-kt:kt-ap-lib",
+  ],
+  visibility = [
+    'PUBLIC',
+  ],
+  plugins = [
+      "//ap-java:ap-java",
+      "//ap-kt:ap-kt",
+  ],
+)

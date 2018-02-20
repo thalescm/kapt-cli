@@ -1,4 +1,4 @@
-package br.com.thales.buckt
+package br.com.thales.buckt.kotlin
 
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec

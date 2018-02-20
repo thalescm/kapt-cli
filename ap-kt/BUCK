@@ -1,0 +1,28 @@
+java_annotation_processor(
+    name = "ap-kt",
+    deps = [
+        ":kt-ap-lib",
+    ],
+    processor_class = "br.com.thales.buckt.java.VMProcessor",
+    visibility = [
+      'PUBLIC',
+    ],
+)
+
+kotlin_library(
+    name = "kt-ap-lib",
+    srcs = [
+        "br/com/thales/buckt/kotlin/ViewBinder.kt",
+        "br/com/thales/buckt/kotlin/VBProcessor.kt",
+    ],
+    deps = [
+      '//libs:com.squareup.kotlinpoet-0.5.0.jar',
+    ],
+    resources = glob([
+        'resources/**',
+    ]),
+    resources_root = "resources",
+    visibility = [
+      'PUBLIC',
+    ],
+)
